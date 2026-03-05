@@ -84,8 +84,7 @@ This is stored in the result buffer as buffer local value.")
                         nil
                         nil
                         "-command"
-                        (concat "add-type -assembly system.io.compression.filesystem;"
-                                "[io.compression.zipfile]::ExtractToDirectory(\"" filename "\", \"" target-dir "\")"))
+                        (concat "Expand-Archive \"" filename "\" \"" target-dir "\""))
 
         (message (concat "lsp-csharp: for automatic server installation procedure"
                          " to work on Windows you need to have powershell v5+ installed")))))
