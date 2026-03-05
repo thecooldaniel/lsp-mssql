@@ -73,12 +73,15 @@ This is stored in the result buffer as buffer local value.")
   (cond
    ((eq system-type 'windows-nt)
     ;; on windows, we attempt to use powershell v5+, available on Windows 10+
-    (let ((powershell-version (substring
+    (let* ((powershell-version (substring
                                (shell-command-to-string "powershell -noprofile -command \"(Get-Host).Version.Major\"")
+                               0 -1))
+		  (pwsh-version (substring
+                               (shell-command-to-string "pwsh -noprofile -command \"(Get-Host).Version.Major\"")
                                0 -1))
 		  ;; If PowerShell v7+ is available, use that
 		  (powershell-binary (if (> (string-to-number pwsh-version) 0) "pwsh" "powershell")))
-      (if (or (>= (string-to-number powershell-version) 5) (string= powershell-binary "pwsh"))
+      (if (or (string= powershell-binary "pwsh") (>= (string-to-number powershell-version) 5))
           (call-process powershell-binary
                         nil
                         nil
