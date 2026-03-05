@@ -75,8 +75,12 @@ This is stored in the result buffer as buffer local value.")
     ;; on windows, we attempt to use powershell v5+, available on Windows 10+
     (let ((powershell-version (substring
                                (shell-command-to-string "powershell -noprofile -command \"(Get-Host).Version.Major\"")
+                               0 -1))
+		  ;; Powershell v7+ uses a different binary
+		  (pwsh-version (substring
+                               (shell-command-to-string "pwsh -noprofile -command \"(Get-Host).Version.Major\"")
                                0 -1)))
-      (if (>= (string-to-number powershell-version) 5)
+      (if (or (>= (string-to-number powershell-version) 5) (>= (string-to-number pwsh-version) 5))
           (call-process "powershell"
                         nil
                         nil
