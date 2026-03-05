@@ -74,7 +74,7 @@ This is stored in the result buffer as buffer local value.")
    ((eq system-type 'windows-nt)
     ;; on windows, we attempt to use powershell v5+, available on Windows 10+
     (let ((powershell-version (substring
-                               (shell-command-to-string "powershell -command \"(Get-Host).Version.Major\"")
+                               (shell-command-to-string "powershell -noprofile -command \"(Get-Host).Version.Major\"")
                                0 -1)))
       (if (>= (string-to-number powershell-version) 5)
           (call-process "powershell"
