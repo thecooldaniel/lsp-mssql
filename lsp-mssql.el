@@ -87,7 +87,7 @@ This is stored in the result buffer as buffer local value.")
                         nil
                         nil
                         "-command"
-                        (concat "Expand-Archive \"" filename "\" \"" target-dir "\""))
+                        (concat "-noprofile Expand-Archive \"" filename "\" \"" target-dir "\""))
 
         (message (concat "lsp-csharp: for automatic server installation procedure"
                          " to work on Windows you need to have powershell v5+ installed")))))
