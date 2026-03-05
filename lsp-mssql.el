@@ -76,12 +76,10 @@ This is stored in the result buffer as buffer local value.")
     (let ((powershell-version (substring
                                (shell-command-to-string "powershell -noprofile -command \"(Get-Host).Version.Major\"")
                                0 -1))
-		  ;; Powershell v7+ uses a different binary
-		  (pwsh-version (substring
-                               (shell-command-to-string "pwsh -noprofile -command \"(Get-Host).Version.Major\"")
-                               0 -1)))
-      (if (or (>= (string-to-number powershell-version) 5) (>= (string-to-number pwsh-version) 5))
-          (call-process "powershell"
+		  ;; If PowerShell v7+ is available, use that
+		  (powershell-binary (if (> (string-to-number pwsh-version) 0) "pwsh" "powershell")))
+      (if (or (>= (string-to-number powershell-version) 5) (string= powershell-binary "pwsh"))
+          (call-process powershell-binary
                         nil
                         nil
                         nil
